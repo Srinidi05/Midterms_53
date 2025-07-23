@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>MTP</title>
+ <script src="https://cdn.tailwindcss.com/"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css/">
+</head>
+<body>
+ <header class=" w-full top-0 left-0 bg-black/70 z-10">
+  <div class="flex gap-3 items-center justify-between h-16">
+   <div class="flex gap-5 p-2">
+<h1 class="text-red-100 text-3xl items-left p-2 md:text-white hover:text-red-100 font-bold font-sans">E SHOP EXPLORER</h1>
+   </div>
+   <!-- laptop nav -->
+  <nav class="flex space-x-4 md:flex right-5 underline">
+   <a class="hover:text-white" href="./index.html">Home</a>
+   <a class="hover:text-white" href="./fetch.html">Products</a>
+   <a class="hover:text-white" href="./form.html">Order Now</a>
+  </nav>
+<button onclick="toggM()" class="md:hidden">
+<i class="fas fa-bars"></i></button>
+<!-- mobile nav -->
+ <nav class="hidden md:hidden flex flex-col text-l" id="menu">
+   <a href="./index.html">Home</a>
+   <a href="./fetch.html">Products</a>
+   <a href="./form.html">Order Now</a>
+  </nav>
+  </div>
+  
+ </header>
+ <main>
+ <section class="relative min-h-screen w-full bg-center bg-cover z-0" style="background-image: url(./bg-img2.jpeg);">
+ <div class="absolute inset-0 bg-black/60 z-0">
+  <div class="relative flex flex-col justify-center items-center min-h-screen z-10">
+
+
+<!-- geolocation -->
+<button onclick="getLocation()" class="bg-blue-500 text-white p-2 rounded">Get Location</button>
+<h3 id="location" class="text-white p-5">Location should be displayed here</h3>
+
+
+<!-- form and web storage -->
+<div class="flex flex-col items-center text-l text-white p-5 border">
+    <h1 class="text-2xl text-white hover:text-text-red-200 p-4">Welcome to the Shopaholics Paradise!</h1>
+    
+<form >
+    <label for="name">
+     Name: <input class="text-black focus:bg-blue-200" type="name" id="name" placeholder="enter name:" required>
+    </label>
+<br>
+<br>
+    <label for="email">
+     Email: <input class="text-black focus:bg-blue-200" type="email" id="email" placeholder="enter email:" required>
+    </label>
+<br>
+<br>
+    <label for="product">
+     Product: <input class="text-black" type="text focus:bg-blue-200" id="product" placeholder="enter product:" required>
+    </label>
+<br>
+<br>
+    <label for="remember">
+        <input type="checkbox" id="remember" name="remember" />
+        Remember me
+      </label>
+   </div>
+    <button onclick="saveSt() " class="border rounded bg-blue-400">Save</button>
+  </div>
+ </div></section>
+
+
+ </main>
+
+ <footer class="bg-black/70 bottom-0 w-full h-20 flex items-center justify-between">
+ <div class="bg-brown-300 flex flex-col justify-center items-center">
+  <p class="text-white flex flex-col justify-center items-center">Copyrights &copy reserved.</p>
+ </div>
+ <div class="bg-black/50 flex justify-center items-center">
+  <p class="text-white flex flex justify-center items-center">find us at:
+   <p id="twitter">
+    Twitter<i id="fas fa-twitter"></i>
+   </p>
+   <p id="reddit">
+    Reddit<i id="fas fa-reddit"></i>
+   </p>
+   <p id="facebook">
+    Facebook<i id="fas fa-facebook"></i>
+   </p>
+  </p>
+ </div>
+ <div>
+
+ </div>
+  <!-- toggle button for mobile nav -->
+  <script>
+   function toggM() {
+   const menu = document.getElementById("menu");
+   menu.classList.toggle("hidden");
+   }
+
+   function saveSt(){
+     const name = document.getElementById("name").value;
+     const email = document.getElementById("email").value;
+     const product = document.getElementById("product").value;
+     const remember = document.getElementById("remember").checked;
+     if(remember){
+      localStorage.setItem("name", name);
+     localStorage.setItem("email", email);
+     localStorage.setItem("product", product);
+     alert("Data saved!");
+     } else {
+      sessionStorage.setItem("name", name);
+      sessionStorage.setItem("email", email);
+      sessionStorage.setItem("product", product);
+      alert("Data saved temporarily!");
+     }
+   }
+   function displaySt() {
+     const name = localStorage.getItem("name") || sessionStorage.getItem("name");
+     const email = localStorage.getItem("email") || sessionStorage.getItem("email");
+     const product = localStorage.getItem("product") || sessionStorage.getItem("product");
+     const output = document.getElementById("output");
+     output.innerHTML = `<p>Name: ${name}</p><p>Email: ${email}</p><p>Product: ${product}</p>`;
+   }
+
+   function getLocation(){
+       if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showposition);
+       }
+       else{
+        alert("Geolocation is not supported by this browser.");
+       }
+      }
+       function showposition(position){
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        document.getElementById("location").innerHTML = "Latitude: " + latitude + ", Longitude: " + longitude;
+
+       }
+  </script>
+ </footer>
+</body>
+</html>
